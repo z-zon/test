@@ -1,12 +1,35 @@
 :root {
     --bg: #f5f7fb;
+    --bg-accent: rgba(37, 99, 235, 0.14);
+    --bg-start: #f5f7fb;
+    --bg-end: #eef2f7;
     --surface: #ffffff;
+    --surface-alpha: rgba(255, 255, 255, 0.92);
+    --surface-border: rgba(255, 255, 255, 0.7);
+    --row-bg: #f8fafc;
     --text: #172033;
     --muted: #697386;
     --line: #e6eaf2;
     --primary: #2563eb;
     --primary-dark: #1d4ed8;
     --shadow: 0 18px 45px rgba(30, 41, 59, 0.14);
+}
+
+[data-theme="dark"] {
+    --bg: #101624;
+    --bg-accent: rgba(96, 165, 250, 0.18);
+    --bg-start: #101624;
+    --bg-end: #172033;
+    --surface: #172033;
+    --surface-alpha: rgba(23, 32, 51, 0.94);
+    --surface-border: rgba(148, 163, 184, 0.22);
+    --row-bg: #1f293f;
+    --text: #f8fafc;
+    --muted: #a6b0c2;
+    --line: #334155;
+    --primary: #60a5fa;
+    --primary-dark: #3b82f6;
+    --shadow: 0 18px 45px rgba(0, 0, 0, 0.34);
 }
 
 * {
@@ -21,8 +44,8 @@ body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans KR", sans-serif;
     color: var(--text);
     background:
-        radial-gradient(circle at top left, rgba(37, 99, 235, 0.14), transparent 34rem),
-        linear-gradient(135deg, #f5f7fb 0%, #eef2f7 100%);
+        radial-gradient(circle at top left, var(--bg-accent), transparent 34rem),
+        linear-gradient(135deg, var(--bg-start) 0%, var(--bg-end) 100%);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -33,18 +56,53 @@ body {
     width: 100%;
     max-width: 680px;
     padding: 36px;
-    background: rgba(255, 255, 255, 0.92);
-    border: 1px solid rgba(255, 255, 255, 0.7);
+    background: var(--surface-alpha);
+    border: 1px solid var(--surface-border);
     border-radius: 24px;
     box-shadow: var(--shadow);
     text-align: center;
 }
 
-header h1 {
+header {
+    display: grid;
+    gap: 16px;
+    justify-items: center;
     margin-bottom: 28px;
+}
+
+header h1 {
+    margin: 0;
     font-size: 2.2rem;
     line-height: 1.2;
     letter-spacing: 0;
+}
+
+.theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 42px;
+    padding: 0 16px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    color: var(--text);
+    background: var(--surface);
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 6px 16px rgba(15, 23, 42, 0.08);
+    transition: transform 160ms ease, border-color 160ms ease, background-color 160ms ease;
+}
+
+.theme-toggle:hover {
+    transform: translateY(-1px);
+    border-color: var(--primary);
+}
+
+.theme-icon {
+    width: 20px;
+    text-align: center;
 }
 
 .lotto-container {
@@ -67,7 +125,7 @@ header h1 {
     justify-content: center;
     gap: 10px;
     padding: 14px;
-    background: #f8fafc;
+    background: var(--row-bg);
     border: 1px solid var(--line);
     border-radius: 14px;
     animation: fade-in 220ms ease both;
@@ -150,8 +208,11 @@ header h1 {
         border-radius: 18px;
     }
 
-    header h1 {
+    header {
         margin-bottom: 22px;
+    }
+
+    header h1 {
         font-size: 1.7rem;
     }
 

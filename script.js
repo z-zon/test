@@ -1,9 +1,32 @@
 const GAME_COUNT = 5;
 const NUMBERS_PER_GAME = 6;
 const MAX_NUMBER = 45;
+const THEME_STORAGE_KEY = "lotto-theme";
 
 const generateButton = document.getElementById("generate-btn");
 const lottoContainer = document.getElementById("lotto-container");
+const themeToggle = document.getElementById("theme-toggle");
+const themeLabel = document.getElementById("theme-label");
+const themeIcon = document.querySelector(".theme-icon");
+
+function getPreferredTheme() {
+    const savedTheme = localStorage.getItem(THEME_STORAGE_KEY);
+
+    if (savedTheme === "light" || savedTheme === "dark") {
+        return savedTheme;
+    }
+
+    return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+}
+
+function applyTheme(theme) {
+    document.documentElement.dataset.theme = theme;
+
+    const isDark = theme === "dark";
+    themeLabel.textContent = isDark ? "다크모드" : "화이트모드";
+    themeIcon.textContent = isDark ? "☾" : "☀";
+    themeToggle.setAttribute("aria-label", isDark ? "화이트모드로 변경" : "다크모드로 변경");
+}
 
 function generateGame() {
     const numbers = new Set();
@@ -55,3 +78,10 @@ function renderGames() {
 }
 
 generateButton.addEventListener("click", renderGames);
+themeToggle.addEventListener("click", () => {
+    const nextTheme = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+    localStorage.setItem(THEME_STORAGE_KEY, nextTheme);
+    applyTheme(nextTheme);
+});
+
+applyTheme(getPreferredTheme());
